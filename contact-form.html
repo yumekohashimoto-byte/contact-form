@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>お問い合わせ</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #f0f4ff 0%, #faf5ff 50%, #fff0f6 100%);
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 580px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .header .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #7c5cfc, #e040fb);
+      color: #fff;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .header h1 {
+      color: #2d2d4e;
+      font-size: 30px;
+      font-weight: 300;
+      letter-spacing: 5px;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 28px;
+      padding: 48px 44px;
+      box-shadow: 0 20px 60px rgba(124, 92, 252, 0.1), 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid rgba(124, 92, 252, 0.08);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      color: #5a5a7a;
+      font-size: 12px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    label .required {
+      color: #e040fb;
+      margin-left: 4px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      background: #f7f7fc;
+      border: 1.5px solid #e8e8f4;
+      border-radius: 12px;
+      padding: 13px 16px;
+      color: #2d2d4e;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s ease;
+      outline: none;
+      appearance: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #bbb;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #7c5cfc;
+      background: #faf8ff;
+      box-shadow: 0 0 0 4px rgba(124, 92, 252, 0.08);
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%237c5cfc' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-color: #f7f7fc;
+      padding-right: 44px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+      line-height: 1.7;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, #e8e8f4, transparent);
+      margin: 4px 0 24px;
+    }
+
+    .privacy-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 28px;
+      cursor: pointer;
+    }
+
+    .privacy-check input[type="checkbox"] {
+      display: none;
+    }
+
+    .custom-checkbox {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border: 1.5px solid #d0d0e8;
+      border-radius: 6px;
+      background: #f7f7fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      margin-top: 1px;
+    }
+
+    .privacy-check input[type="checkbox"]:checked + .custom-checkbox {
+      background: linear-gradient(135deg, #7c5cfc, #e040fb);
+      border-color: transparent;
+    }
+
+    .custom-checkbox svg { display: none; }
+    .privacy-check input[type="checkbox"]:checked + .custom-checkbox svg { display: block; }
+
+    .privacy-check span {
+      color: #888;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .privacy-check a {
+      color: #7c5cfc;
+      text-decoration: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #7c5cfc, #e040fb);
+      color: #fff;
+      border: none;
+      border-radius: 14px;
+      font-size: 15px;
+      font-family: inherit;
+      letter-spacing: 3px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      font-weight: 600;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(124, 92, 252, 0.35);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Error message */
+    .error-msg {
+      background: #fff0f4;
+      border: 1px solid #ffc0d0;
+      color: #c0365a;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    /* Success state */
+    .success-overlay {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .success-overlay.show {
+      display: block;
+    }
+
+    .success-icon {
+      width: 76px;
+      height: 76px;
+      background: linear-gradient(135deg, #7c5cfc, #e040fb);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 32px rgba(124, 92, 252, 0.3);
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-overlay h2 {
+      color: #2d2d4e;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .success-overlay p {
+      color: #888;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .form-content {
+      transition: opacity 0.3s ease;
+    }
+
+    @media (max-width: 500px) {
+      .card { padding: 36px 24px; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .header h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header">
+      <div class="badge">Contact Us</div>
+      <h1>お問い合わせ</h1>
+      <p>ご質問・ご相談はお気軽にどうぞ。<br>通常2〜3営業日以内にご返信いたします。</p>
+    </div>
+
+    <div class="card">
+      <div class="form-content" id="formContent">
+        <div class="error-msg" id="errorMsg">送信に失敗しました。時間をおいて再度お試しください。</div>
+
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>お名前<span class="required">*</span></label>
+              <input type="text" name="name" placeholder="山田 太郎" required />
+            </div>
+            <div class="form-group">
+              <label>会社名</label>
+              <input type="text" name="company" placeholder="株式会社〇〇" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>メールアドレス<span class="required">*</span></label>
+            <input type="email" name="email" placeholder="example@company.com" required />
+          </div>
+
+          <div class="form-group">
+            <label>電話番号</label>
+            <input type="tel" name="phone" placeholder="03-0000-0000" />
+          </div>
+
+          <div class="form-group">
+            <label>お問い合わせ種別<span class="required">*</span></label>
+            <select name="category" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="サービスについて">サービスについて</option>
+              <option value="料金・プランについて">料金・プランについて</option>
+              <option value="サポート・技術的な質問">サポート・技術的な質問</option>
+              <option value="パートナーシップ・業務提携">パートナーシップ・業務提携</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="form-group">
+            <label>お問い合わせ内容<span class="required">*</span></label>
+            <textarea name="message" placeholder="ご質問・ご相談内容をご記入ください" required></textarea>
+          </div>
+
+          <label class="privacy-check">
+            <input type="checkbox" required />
+            <span class="custom-checkbox">
+              <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+                <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <span><a href="#">プライバシーポリシー</a>に同意する</span>
+          </label>
+
+          <button type="submit" class="submit-btn" id="submitBtn">送　信</button>
+        </form>
+      </div>
+
+      <div class="success-overlay" id="successOverlay">
+        <div class="success-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <path d="M6 16l7 7L26 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>送信完了しました</h2>
+        <p>お問い合わせありがとうございます。<br>担当者より折り返しご連絡いたします。</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ★ ここにGoogle Apps ScriptのURLを貼り付けてください
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBpM3Z4VCdPoaf7sPzBFq4CWzWCS8Dsptw-r4iXfm15k1Nb01RBB551MEjpfhg0p0Y/exec";
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('submitBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = '送信中...';
+
+      const form = e.target;
+      const data = {
+        name:     form.name.value,
+        company:  form.company.value,
+        email:    form.email.value,
+        phone:    form.phone.value,
+        category: form.category.value,
+        message:  form.message.value,
+        date:     new Date().toLocaleString('ja-JP')
+      };
+
+      // Apps Script URLが設定されていない場合はデモ動作
+      if (APPS_SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") {
+        await new Promise(r => setTimeout(r, 800));
+        showSuccess();
+        return;
+      }
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+        showSuccess();
+      } catch {
+        errorMsg.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '送　信';
+      }
+    }
+
+    function showSuccess() {
+      const formContent = document.getElementById('formContent');
+      const successOverlay = document.getElementById('successOverlay');
+      formContent.style.opacity = '0';
+      setTimeout(() => {
+        formContent.style.display = 'none';
+        successOverlay.classList.add('show');
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
