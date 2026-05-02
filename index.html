@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
@@ -220,7 +220,6 @@
       transform: none;
     }
 
-    /* Error message */
     .error-msg {
       background: #fff0f4;
       border: 1px solid #ffc0d0;
@@ -232,7 +231,6 @@
       display: none;
     }
 
-    /* Success state */
     .success-overlay {
       display: none;
       text-align: center;
@@ -291,8 +289,8 @@
   <div class="container">
     <div class="header">
       <div class="badge">Contact Us</div>
-      <h1>お問い合わせ</h1>
-      <p>ご質問・ご相談はお気軽にどうぞ。<br>通常2〜3営業日以内にご返信いたします。</p>
+      <h1>管理プランのお問い合わせ</h1>
+      <p>管理プランの詳細・ご相談はお気軽にどうぞ。</p>
     </div>
 
     <div class="card">
@@ -306,29 +304,47 @@
               <input type="text" name="name" placeholder="山田 太郎" required />
             </div>
             <div class="form-group">
-              <label>会社名</label>
-              <input type="text" name="company" placeholder="株式会社〇〇" />
+              <label>電話番号<span class="required">*</span></label>
+              <input type="tel" name="phone" placeholder="090-0000-0000" required />
             </div>
           </div>
 
           <div class="form-group">
             <label>メールアドレス<span class="required">*</span></label>
-            <input type="email" name="email" placeholder="example@company.com" required />
+            <input type="email" name="email" placeholder="example@mail.com" required />
           </div>
 
-          <div class="form-group">
-            <label>電話番号</label>
-            <input type="tel" name="phone" placeholder="03-0000-0000" />
+          <div class="form-row">
+            <div class="form-group">
+              <label>物件の種類<span class="required">*</span></label>
+              <select name="property_type" required>
+                <option value="" disabled selected>選択してください</option>
+                <option value="マンション">マンション</option>
+                <option value="アパート">アパート</option>
+                <option value="戸建て">戸建て</option>
+                <option value="その他">その他</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>物件の戸数<span class="required">*</span></label>
+              <select name="units" required>
+                <option value="" disabled selected>選択してください</option>
+                <option value="1〜5戸">1〜5戸</option>
+                <option value="6〜10戸">6〜10戸</option>
+                <option value="11〜20戸">11〜20戸</option>
+                <option value="21戸以上">21戸以上</option>
+              </select>
+            </div>
           </div>
 
           <div class="form-group">
             <label>お問い合わせ種別<span class="required">*</span></label>
             <select name="category" required>
               <option value="" disabled selected>選択してください</option>
-              <option value="サービスについて">サービスについて</option>
-              <option value="料金・プランについて">料金・プランについて</option>
-              <option value="サポート・技術的な質問">サポート・技術的な質問</option>
-              <option value="パートナーシップ・業務提携">パートナーシップ・業務提携</option>
+              <option value="管理プランについて">管理プランについて</option>
+              <option value="現在の管理会社からの乗り換え">現在の管理会社からの乗り換え</option>
+              <option value="料金・費用について">料金・費用について</option>
+              <option value="空室対策について">空室対策について</option>
               <option value="その他">その他</option>
             </select>
           </div>
@@ -336,8 +352,8 @@
           <div class="divider"></div>
 
           <div class="form-group">
-            <label>お問い合わせ内容<span class="required">*</span></label>
-            <textarea name="message" placeholder="ご質問・ご相談内容をご記入ください" required></textarea>
+            <label>ご相談内容</label>
+            <textarea name="message" placeholder="ご質問・ご相談内容をご自由にご記入ください"></textarea>
           </div>
 
           <label class="privacy-check">
@@ -367,8 +383,7 @@
   </div>
 
   <script>
-    // ★ ここにGoogle Apps ScriptのURLを貼り付けてください
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxBpM3Z4VCdPoaf7sPzBFq4CWzWCS8Dsptw-r4iXfm15k1Nb01RBB551MEjpfhg0p0Y/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyskAlEUHFHZGRn7y2287Ld57f2xSUsBLWmumwH7bumbsONlX8eUXyR2rAgqjhTkVOr/exec";
 
     async function handleSubmit(e) {
       e.preventDefault();
@@ -381,21 +396,15 @@
 
       const form = e.target;
       const data = {
-        name:     form.name.value,
-        company:  form.company.value,
-        email:    form.email.value,
-        phone:    form.phone.value,
-        category: form.category.value,
-        message:  form.message.value,
-        date:     new Date().toLocaleString('ja-JP')
+        name:          form.name.value,
+        phone:         form.phone.value,
+        email:         form.email.value,
+        property_type: form.property_type.value,
+        units:         form.units.value,
+        category:      form.category.value,
+        message:       form.message.value,
+        date:          new Date().toLocaleString('ja-JP')
       };
-
-      // Apps Script URLが設定されていない場合はデモ動作
-      if (APPS_SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") {
-        await new Promise(r => setTimeout(r, 800));
-        showSuccess();
-        return;
-      }
 
       try {
         await fetch(APPS_SCRIPT_URL, {
