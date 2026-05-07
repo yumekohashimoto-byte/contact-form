@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>お問い合わせ</title>
+  <title>プライバシーポリシー | 株式会社ルムカン</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,27 +13,26 @@
 
     body {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #F4F8FC;
+      background: linear-gradient(145deg, #f0f4ff 0%, #faf5ff 50%, #fff0f6 100%);
       font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif;
-      padding: 40px 20px;
+      padding: 60px 20px;
+      color: #2d2d4e;
     }
 
     .container {
       width: 100%;
-      max-width: 580px;
+      max-width: 720px;
+      margin: 0 auto;
     }
 
     .header {
       text-align: center;
-      margin-bottom: 36px;
+      margin-bottom: 48px;
     }
 
     .header .badge {
       display: inline-block;
-      background: #2860A8;
+      background: linear-gradient(135deg, #7c5cfc, #e040fb);
       color: #fff;
       font-size: 11px;
       letter-spacing: 3px;
@@ -45,8 +44,8 @@
     }
 
     .header h1 {
-      color: #1A2E48;
-      font-size: 30px;
+      color: #2d2d4e;
+      font-size: 28px;
       font-weight: 300;
       letter-spacing: 5px;
       margin-bottom: 12px;
@@ -54,233 +53,126 @@
 
     .header p {
       color: #888;
-      font-size: 14px;
-      line-height: 1.8;
+      font-size: 13px;
     }
 
     .card {
       background: #ffffff;
       border-radius: 28px;
-      padding: 48px 44px;
-      box-shadow: 0 20px 60px rgba(40, 96, 168, 0.1), 0 4px 20px rgba(0,0,0,0.06);
-      border: 1px solid #D8E8F4;
+      padding: 56px 60px;
+      box-shadow: 0 20px 60px rgba(124, 92, 252, 0.1), 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid rgba(124, 92, 252, 0.08);
     }
 
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
+    .intro {
+      font-size: 14px;
+      line-height: 1.9;
+      color: #555;
+      margin-bottom: 40px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid #f0f0f8;
     }
 
-    .form-group {
-      margin-bottom: 22px;
+    .section {
+      margin-bottom: 36px;
     }
 
-    label {
-      display: block;
-      color: #4A6A90;
-      font-size: 12px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-
-    label .required {
-      color: #2860A8;
-      margin-left: 4px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    select,
-    textarea {
-      width: 100%;
-      background: #F4F8FC;
-      border: 1.5px solid #D8E8F4;
-      border-radius: 12px;
-      padding: 13px 16px;
-      color: #1A2E48;
+    .section h2 {
       font-size: 15px;
-      font-family: inherit;
-      transition: all 0.2s ease;
-      outline: none;
-      appearance: none;
+      font-weight: 700;
+      color: #2d2d4e;
+      margin-bottom: 14px;
+      padding-left: 14px;
+      border-left: 3px solid #7c5cfc;
+      letter-spacing: 1px;
     }
 
-    input::placeholder,
-    textarea::placeholder {
-      color: #bbb;
+    .section p,
+    .section li {
+      font-size: 14px;
+      line-height: 1.9;
+      color: #555;
     }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
-      border-color: #2860A8;
-      background: #F4F8FC;
-      box-shadow: 0 0 0 4px rgba(40, 96, 168, 0.1);
+    .section ul {
+      padding-left: 20px;
     }
 
-    select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232860A8' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      background-color: #F4F8FC;
-      padding-right: 44px;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 130px;
-      line-height: 1.7;
+    .section ul li {
+      margin-bottom: 6px;
     }
 
     .divider {
       height: 1px;
       background: linear-gradient(to right, transparent, #e8e8f4, transparent);
-      margin: 4px 0 24px;
+      margin: 36px 0;
     }
 
-    .privacy-check {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 28px;
-      cursor: pointer;
-    }
-
-    .privacy-check input[type="checkbox"] {
-      display: none;
-    }
-
-    .custom-checkbox {
-      width: 20px;
-      height: 20px;
-      min-width: 20px;
-      border: 1.5px solid #d0d0e8;
-      border-radius: 6px;
+    .company-info {
       background: #f7f7fc;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-      margin-top: 1px;
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-top: 40px;
     }
 
-    .privacy-check input[type="checkbox"]:checked + .custom-checkbox {
-      background: #2860A8;
-      border-color: transparent;
+    .company-info h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: #5a5a7a;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
     }
 
-    .custom-checkbox svg { display: none; }
-    .privacy-check input[type="checkbox"]:checked + .custom-checkbox svg { display: block; }
+    .company-info table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-    .privacy-check span {
+    .company-info td {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #555;
+      padding: 6px 0;
+      vertical-align: top;
+    }
+
+    .company-info td:first-child {
+      width: 120px;
       color: #888;
       font-size: 13px;
-      line-height: 1.6;
     }
 
-    .privacy-check a {
+    .company-info a {
       color: #2860A8;
       text-decoration: none;
     }
 
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: #2860A8;
-      color: #fff;
-      border: none;
-      border-radius: 14px;
-      font-size: 15px;
-      font-family: inherit;
-      letter-spacing: 3px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      font-weight: 600;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(40, 96, 168, 0.35);
-    }
-
-    .submit-btn:active {
-      transform: translateY(0);
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .error-msg {
-      background: #fff0f4;
-      border: 1px solid #ffc0d0;
-      color: #c0365a;
-      border-radius: 10px;
-      padding: 12px 16px;
+    .date {
+      text-align: right;
       font-size: 13px;
-      margin-bottom: 20px;
-      display: none;
+      color: #aaa;
+      margin-top: 40px;
     }
 
-    .success-overlay {
-      display: none;
-      text-align: center;
-      padding: 20px 0;
-    }
-
-    .success-overlay.show {
-      display: block;
-    }
-
-    .success-icon {
-      width: 76px;
-      height: 76px;
-      background: #2860A8;
-      border-radius: 50%;
-      display: flex;
+    .back-btn {
+      display: inline-flex;
       align-items: center;
-      justify-content: center;
-      margin: 0 auto 24px;
-      animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-      box-shadow: 0 12px 32px rgba(40, 96, 168, 0.3);
-    }
-
-    @keyframes scaleIn {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    .success-overlay h2 {
-      color: #1A2E48;
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
-    }
-
-    .success-overlay p {
-      color: #888;
+      gap: 8px;
+      margin-bottom: 32px;
+      color: #2860A8;
       font-size: 14px;
-      line-height: 1.8;
+      text-decoration: none;
+      transition: opacity 0.2s;
     }
 
-    .form-content {
-      transition: opacity 0.3s ease;
+    .back-btn:hover {
+      opacity: 0.7;
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
       .card { padding: 36px 24px; }
-      .form-row { grid-template-columns: 1fr; gap: 0; }
-      .header h1 { font-size: 26px; }
+      .header h1 { font-size: 22px; }
     }
   </style>
 </head>
@@ -288,149 +180,116 @@
 
   <div class="container">
     <div class="header">
-      <div class="badge">Contact Us</div>
-      <h1>管理プランのお問い合わせ</h1>
-      <p>管理プランの詳細・ご相談はお気軽にどうぞ。</p>
+      <div class="badge">Privacy Policy</div>
+      <h1>プライバシーポリシー</h1>
+      <p>個人情報の取り扱いについて</p>
     </div>
+
+    <a href="./" class="back-btn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M10 12L6 8l4-4" stroke="#2860A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      お問い合わせフォームに戻る
+    </a>
 
     <div class="card">
-      <div class="form-content" id="formContent">
-        <div class="error-msg" id="errorMsg">送信に失敗しました。時間をおいて再度お試しください。</div>
+      <p class="intro">
+        株式会社ルムカン（以下「当社」）は、お客様の個人情報の保護を重要な責務と認識し、以下のとおりプライバシーポリシーを定め、適切な管理・運用に努めます。
+      </p>
 
-        <form id="contactForm" onsubmit="handleSubmit(event)">
-          <div class="form-row">
-            <div class="form-group">
-              <label>お名前<span class="required">*</span></label>
-              <input type="text" name="name" placeholder="山田 太郎" required />
-            </div>
-            <div class="form-group">
-              <label>電話番号<span class="required">*</span></label>
-              <input type="tel" name="phone" placeholder="090-0000-0000" required />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>メールアドレス<span class="required">*</span></label>
-            <input type="email" name="email" placeholder="example@mail.com" required />
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>物件の種類<span class="required">*</span></label>
-              <select name="property_type" required>
-                <option value="" disabled selected>選択してください</option>
-                <option value="マンション">マンション</option>
-                <option value="アパート">アパート</option>
-                <option value="戸建て">戸建て</option>
-                <option value="その他">その他</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>物件の戸数<span class="required">*</span></label>
-              <select name="units" required>
-                <option value="" disabled selected>選択してください</option>
-                <option value="1〜5戸">1〜5戸</option>
-                <option value="6〜10戸">6〜10戸</option>
-                <option value="11〜20戸">11〜20戸</option>
-                <option value="21戸以上">21戸以上</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>お問い合わせ種別<span class="required">*</span></label>
-            <select name="category" required>
-              <option value="" disabled selected>選択してください</option>
-              <option value="管理プランについて">管理プランについて</option>
-              <option value="現在の管理会社からの乗り換え">現在の管理会社からの乗り換え</option>
-              <option value="料金・費用について">料金・費用について</option>
-              <option value="空室対策について">空室対策について</option>
-              <option value="その他">その他</option>
-            </select>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="form-group">
-            <label>ご相談内容</label>
-            <textarea name="message" placeholder="ご質問・ご相談内容をご自由にご記入ください"></textarea>
-          </div>
-
-          <label class="privacy-check">
-            <input type="checkbox" required />
-            <span class="custom-checkbox">
-              <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
-                <path d="M1 5l3.5 3.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-            <span><a href="privacy-policy.html" target="_blank">プライバシーポリシー</a>に同意する</span>
-          </label>
-
-          <button type="submit" class="submit-btn" id="submitBtn">送　信</button>
-        </form>
+      <div class="section">
+        <h2>第1条　個人情報の定義</h2>
+        <p>本ポリシーにおける「個人情報」とは、個人情報保護法に定める個人情報、すなわち生存する個人に関する情報であって、氏名・電話番号・メールアドレスその他の記述により特定の個人を識別できるものをいいます。</p>
       </div>
 
-      <div class="success-overlay" id="successOverlay">
-        <div class="success-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <path d="M6 16l7 7L26 9" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h2>送信完了しました</h2>
-        <p>お問い合わせありがとうございます。<br>担当者より折り返しご連絡いたします。</p>
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>第2条　個人情報の収集</h2>
+        <p>当社は、お問い合わせフォームその他の手段により、以下の情報を取得することがあります。</p>
+        <ul style="margin-top: 12px;">
+          <li>氏名</li>
+          <li>電話番号</li>
+          <li>メールアドレス</li>
+          <li>お客様が所有する物件に関する情報</li>
+          <li>その他お問い合わせ内容</li>
+        </ul>
       </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>第3条　個人情報の利用目的</h2>
+        <p>取得した個人情報は、以下の目的の範囲内で利用します。</p>
+        <ul style="margin-top: 12px;">
+          <li>お問い合わせへの対応およびご連絡</li>
+          <li>管理プランのご提案・サービスのご案内</li>
+          <li>契約の締結・履行に関する業務</li>
+          <li>サービス改善・統計分析（個人を特定しない形式）</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>第4条　個人情報の第三者提供</h2>
+        <p>当社は、以下の場合を除き、お客様の個人情報を第三者に提供・開示しません。</p>
+        <ul style="margin-top: 12px;">
+          <li>お客様本人の同意がある場合</li>
+          <li>法令に基づき開示が必要な場合</li>
+          <li>人の生命・身体・財産の保護のために必要な場合</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>第5条　個人情報の管理</h2>
+        <p>当社は、個人情報の漏洩・滅失・毀損を防止するため、適切なセキュリティ対策を講じ、安全に管理します。また、個人情報を取り扱う従業者に対して、適切な教育・監督を行います。</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>第6条　個人情報の開示・訂正・削除</h2>
+        <p>お客様は、当社が保有するご自身の個人情報について、開示・訂正・削除・利用停止を請求することができます。ご請求の際は、下記お問い合わせ窓口までご連絡ください。ご本人確認の上、合理的な期間内に対応いたします。</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>第7条　Cookieの利用</h2>
+        <p>当社のウェブサイトでは、サービス向上を目的としてCookieを使用する場合があります。ブラウザの設定によりCookieを無効にすることができますが、一部機能がご利用いただけない場合があります。</p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>第8条　プライバシーポリシーの変更</h2>
+        <p>当社は、法令の変更やサービス内容の変更に伴い、本ポリシーを予告なく改訂することがあります。改訂後のポリシーは、当ページに掲載した時点より効力を生じるものとします。</p>
+      </div>
+
+      <div class="company-info">
+        <h3>お問い合わせ窓口</h3>
+        <table>
+          <tr>
+            <td>会社名</td>
+            <td>株式会社ルムカン</td>
+          </tr>
+          <tr>
+            <td>住所</td>
+            <td>〒170-6012 東京都豊島区東池袋3丁目1-1<br>サンシャイン60 12階</td>
+          </tr>
+          <tr>
+            <td>メール</td>
+            <td><a href="mailto:info@rumukan.com">info@rumukan.com</a></td>
+          </tr>
+        </table>
+      </div>
+
+      <p class="date">制定日：2026年5月2日</p>
     </div>
   </div>
-
-  <script>
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx9BgpcHQTL0mJJsSvcC-tZbQ6yhKPO2gkZr64OFy7_59BZbJhwklc2k73wHfQ1kJh1/exec";
-
-    async function handleSubmit(e) {
-      e.preventDefault();
-
-      const btn = document.getElementById('submitBtn');
-      const errorMsg = document.getElementById('errorMsg');
-      errorMsg.style.display = 'none';
-      btn.disabled = true;
-      btn.textContent = '送信中...';
-
-      const form = e.target;
-      const data = {
-        name:          form.name.value,
-        phone:         form.phone.value,
-        email:         form.email.value,
-        property_type: form.property_type.value,
-        units:         form.units.value,
-        category:      form.category.value,
-        message:       form.message.value,
-        date:          new Date().toLocaleString('ja-JP')
-      };
-
-      try {
-        await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-        showSuccess();
-      } catch {
-        errorMsg.style.display = 'block';
-        btn.disabled = false;
-        btn.textContent = '送　信';
-      }
-    }
-
-    function showSuccess() {
-      const formContent = document.getElementById('formContent');
-      const successOverlay = document.getElementById('successOverlay');
-      formContent.style.opacity = '0';
-      setTimeout(() => {
-        formContent.style.display = 'none';
-        successOverlay.classList.add('show');
-      }, 300);
-    }
-  </script>
 
 </body>
 </html>
