@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>会社提案資料</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1A2E48;
+      --blue: #2860A8;
+      --light-blue: #4A90C8;
+      --pale: #EEF5FC;
+      --accent: #E8A020;
+      --gray: #6A7A8A;
+      --border: #C8DCEA;
+    }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+      background: #0D1C2E;
+      color: var(--navy);
+      height: 100vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Slide shell ── */
+    .presentation {
+      width: 100%;
+      max-width: 1100px;
+      aspect-ratio: 16/9;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+    }
+    .slide.active { display: flex; }
+
+    /* ── Slide header bar ── */
+    .slide-header {
+      background: var(--navy);
+      color: #fff;
+      padding: 18px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .slide-header .page-tag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--light-blue);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .slide-header h2 {
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: 4px;
+    }
+    .slide-header .logos {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+    }
+
+    /* ── Slide body ── */
+    .slide-body {
+      flex: 1;
+      padding: 32px 40px;
+      overflow: hidden;
+    }
+
+    /* ── Navigation ── */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 16px;
+    }
+    .nav-btn {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover { background: var(--blue); border-color: var(--blue); }
+    .nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+    .page-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dot.active { background: var(--light-blue); width: 24px; border-radius: 4px; }
+
+    .page-counter {
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+      letter-spacing: 1px;
+      margin-left: auto;
+    }
+
+    /* ═══════════════════════════════════════
+       PAGE 1 – 会社概要
+    ═══════════════════════════════════════ */
+    .company-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      height: 100%;
+    }
+    .company-card {
+      background: var(--pale);
+      border-radius: 14px;
+      padding: 28px 30px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .company-card .brand {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--blue);
+      border-bottom: 2px solid var(--blue);
+      padding-bottom: 10px;
+    }
+    .company-card.right .brand { color: var(--navy); border-color: var(--navy); }
+    .info-row {
+      display: flex;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .info-row .label {
+      color: var(--gray);
+      min-width: 72px;
+      font-size: 11px;
+      letter-spacing: 1px;
+      padding-top: 2px;
+    }
+    .info-row .value { color: var(--navy); font-weight: 500; }
+    .placeholder {
+      background: #e0e8f0;
+      border-radius: 6px;
+      height: 14px;
+      opacity: 0.5;
+    }
+    .ph-short { width: 120px; }
+    .ph-long { width: 200px; }
+    .ph-full { width: 100%; }
+
+    /* ═══════════════════════════════════════
+       PAGE 2 – ビジネスモデル
+    ═══════════════════════════════════════ */
+    .biz-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 0;
+    }
+    .biz-box {
+      background: var(--pale);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      text-align: center;
+      min-width: 130px;
+    }
+    .biz-box .icon { font-size: 28px; margin-bottom: 8px; }
+    .biz-box .title { font-size: 13px; font-weight: 700; color: var(--navy); letter-spacing: 1px; margin-bottom: 4px; }
+    .biz-box .sub { font-size: 11px; color: var(--gray); line-height: 1.5; }
+    .biz-box.primary { background: var(--navy); border-color: var(--navy); }
+    .biz-box.primary .title { color: #fff; }
+    .biz-box.primary .sub { color: rgba(255,255,255,0.6); }
+    .biz-arrow {
+      color: var(--blue);
+      font-size: 22px;
+      padding: 0 8px;
+      flex-shrink: 0;
+    }
+    .biz-arrow.double { display: flex; flex-direction: column; align-items: center; font-size: 16px; gap: 4px; }
+    .biz-arrow.double span { font-size: 10px; color: var(--gray); }
+
+    .biz-model-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      height: 100%;
+    }
+    .biz-description {
+      background: var(--pale);
+      border-radius: 12px;
+      padding: 18px 24px;
+      border-left: 4px solid var(--blue);
+    }
+    .biz-description p {
+      font-size: 13px;
+      color: var(--navy);
+      line-height: 1.8;
+    }
+
+    /* ═══════════════════════════════════════
+       PAGE 3 – 仲介ネットワーク
+    ═══════════════════════════════════════ */
+    .network-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      height: 100%;
+    }
+    .network-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .network-hub {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 24px rgba(40,96,168,0.3);
+    }
+    .network-hub .hub-icon { font-size: 28px; margin-bottom: 4px; }
+    .network-spokes {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+    .spoke-item {
+      background: var(--pale);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .spoke-item .s-icon { font-size: 20px; }
+    .spoke-item .s-text { font-size: 12px; color: var(--navy); font-weight: 600; }
+    .spoke-item .s-sub { font-size: 11px; color: var(--gray); }
+    .network-stats {
+      background: var(--pale);
+      border-radius: 12px;
+      padding: 20px;
+      border: 1.5px solid var(--border);
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .stat-item { text-align: center; }
+    .stat-item .num {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: -1px;
+    }
+    .stat-item .unit { font-size: 14px; color: var(--blue); }
+    .stat-item .label { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+    /* ═══════════════════════════════════════
+       PAGE 4 – 商品概要
+    ═══════════════════════════════════════ */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      height: 100%;
+    }
+    .product-card {
+      background: var(--pale);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--blue);
+    }
+    .product-card.accent::before { background: var(--accent); }
+    .product-card .p-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gray);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .product-card .p-price {
+      font-size: 44px;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+    .product-card.accent .p-price { color: var(--accent); }
+    .product-card .p-unit {
+      font-size: 14px;
+      color: var(--gray);
+      margin-top: -4px;
+    }
+    .product-card .p-desc {
+      font-size: 13px;
+      color: var(--navy);
+      line-height: 1.7;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      flex: 1;
+    }
+    .product-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--navy);
+      margin-top: 4px;
+    }
+    .product-feature::before {
+      content: '✓';
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    /* ═══════════════════════════════════════
+       PAGE 5 – 付帯サービス
+    ═══════════════════════════════════════ */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      height: 100%;
+    }
+    .service-card {
+      background: var(--pale);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .service-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+    .icon-elec { background: #FFF3E0; }
+    .icon-content { background: #F3E5F5; }
+    .icon-net { background: #E3F2FD; }
+    .service-card h3 { font-size: 16px; font-weight: 700; color: var(--navy); letter-spacing: 1px; }
+    .service-card .s-tag {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-size: 10px;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    .service-card p { font-size: 12px; color: var(--gray); line-height: 1.7; flex: 1; }
+    .service-benefit {
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      color: var(--navy);
+      border: 1px solid var(--border);
+    }
+    .service-benefit .b-label { font-size: 10px; color: var(--gray); margin-bottom: 2px; }
+    .service-benefit .b-value { font-weight: 700; color: var(--blue); }
+
+    /* ═══════════════════════════════════════
+       PAGE 6 – 提案
+    ═══════════════════════════════════════ */
+    .proposal-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      height: 100%;
+    }
+    .scheme-diagram {
+      flex: 1;
+      background: var(--pale);
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .scheme-svg {
+      width: 100%;
+      max-height: 100%;
+    }
+    .proposal-note {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 14px 22px;
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    .proposal-note strong { color: var(--light-blue); }
+
+    /* ═══════════════════════════════════════
+       PAGE 7 – 手数料
+    ═══════════════════════════════════════ */
+    .fee-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      height: 100%;
+    }
+    .fee-structure {
+      background: var(--pale);
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .fee-structure h3 { font-size: 13px; font-weight: 700; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; }
+    .fee-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .fee-row:last-child { border-bottom: none; }
+    .fee-row .f-name { font-size: 13px; color: var(--navy); }
+    .fee-row .f-val { font-size: 16px; font-weight: 700; color: var(--blue); }
+    .stock-chart {
+      background: var(--pale);
+      border-radius: 14px;
+      border: 1.5px solid var(--border);
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .stock-chart h3 { font-size: 13px; font-weight: 700; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; }
+    .bar-chart {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      padding-top: 8px;
+    }
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .bar-fill {
+      width: 100%;
+      border-radius: 6px 6px 0 0;
+      background: linear-gradient(to top, var(--blue), var(--light-blue));
+      transition: height 0.3s;
+    }
+    .bar-label { font-size: 10px; color: var(--gray); }
+    .bar-val { font-size: 11px; font-weight: 700; color: var(--blue); }
+    .chart-note { font-size: 11px; color: var(--gray); }
+
+    /* ═══════════════════════════════════════
+       PAGE 8 – 問い合わせ先
+    ═══════════════════════════════════════ */
+    .contact-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 28px;
+    }
+    .contact-card {
+      background: var(--pale);
+      border: 1.5px solid var(--border);
+      border-radius: 16px;
+      padding: 32px 48px;
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+    .contact-card .c-brand {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+    .contact-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .cd-item .cd-label { font-size: 10px; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+    .cd-item .cd-val { font-size: 14px; color: var(--navy); font-weight: 600; }
+    .contact-btn {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-size: 13px;
+      letter-spacing: 3px;
+      padding: 12px 36px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .tagline {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 2px;
+    }
+
+    /* ── Cover slide ── */
+    .slide-cover {
+      background: var(--navy) !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 16px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .slide-cover::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(40,96,168,0.3) 0%, transparent 70%);
+      top: -200px; right: -100px;
+    }
+    .slide-cover .cover-tag {
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--light-blue);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .slide-cover h1 {
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 8px;
+    }
+    .slide-cover .cover-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 2px;
+    }
+    .cover-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--blue);
+    }
+  </style>
+</head>
+<body>
+
+<div class="presentation">
+
+  <!-- ── SLIDE 1: COVER ── -->
+  <div class="slide slide-cover active" id="slide-1">
+    <div class="cover-tag">Business Proposal</div>
+    <div class="cover-divider"></div>
+    <h1>会 社 提 案 資 料</h1>
+    <div class="cover-sub">SHIKI × 日本住戸　協業提案</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.3);letter-spacing:2px;margin-top:8px;">2026</div>
+  </div>
+
+  <!-- ── SLIDE 2: 会社概要 ── -->
+  <div class="slide" id="slide-2">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">01 / Company Overview</div>
+        <h2>会 社 概 要</h2>
+      </div>
+      <div class="logos">SHIKI &nbsp;×&nbsp; 日本住戸</div>
+    </div>
+    <div class="slide-body">
+      <div class="company-grid">
+
+        <!-- SHIKI -->
+        <div class="company-card">
+          <div class="brand">SHIKI</div>
+          <div class="info-row">
+            <div class="label">会社名</div>
+            <div class="value">株式会社 SHIKI</div>
+          </div>
+          <div class="info-row">
+            <div class="label">所在地</div>
+            <div class="value"><div class="placeholder ph-long" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">設立</div>
+            <div class="value"><div class="placeholder ph-short" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">代表</div>
+            <div class="value"><div class="placeholder ph-short" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">資本金</div>
+            <div class="value"><div class="placeholder ph-short" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">事業内容</div>
+            <div class="value" style="flex-direction:column;gap:4px;display:flex;">
+              <div class="placeholder ph-full" style="height:13px;"></div>
+              <div class="placeholder ph-long" style="height:13px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 日本住戸 -->
+        <div class="company-card right">
+          <div class="brand">日本住戸</div>
+          <div class="info-row">
+            <div class="label">会社名</div>
+            <div class="value"><div class="placeholder ph-long" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">所在地</div>
+            <div class="value"><div class="placeholder ph-long" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">設立</div>
+            <div class="value"><div class="placeholder ph-short" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">代表</div>
+            <div class="value"><div class="placeholder ph-short" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">資本金</div>
+            <div class="value"><div class="placeholder ph-short" style="height:13px;"></div></div>
+          </div>
+          <div class="info-row">
+            <div class="label">事業内容</div>
+            <div class="value" style="flex-direction:column;gap:4px;display:flex;">
+              <div class="placeholder ph-full" style="height:13px;"></div>
+              <div class="placeholder ph-long" style="height:13px;"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3: ビジネスモデル ── -->
+  <div class="slide" id="slide-3">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">02 / Business Model</div>
+        <h2>ビ ジ ネ ス モ デ ル</h2>
+      </div>
+      <div class="logos">SHIKIモデルを踏襲</div>
+    </div>
+    <div class="slide-body">
+      <div class="biz-model-wrap">
+        <div class="biz-description">
+          <p>SHIKIが確立した<strong>入居者向け月次課金モデル</strong>を基盤に、物件オーナーへのバリュー提供と仲介会社への収益シェアを組み合わせた三方よしのビジネス設計です。</p>
+        </div>
+        <div class="biz-flow">
+          <div class="biz-box">
+            <div class="icon">🏢</div>
+            <div class="title">物件オーナー</div>
+            <div class="sub">管理コスト削減<br>空室リスク低減</div>
+          </div>
+          <div class="biz-arrow">→</div>
+          <div class="biz-box primary">
+            <div class="icon">⚡</div>
+            <div class="title">SHIKI × 日本住戸</div>
+            <div class="sub">プラットフォーム<br>運営・管理</div>
+          </div>
+          <div class="biz-arrow double">
+            <div>↔</div>
+            <span>収益シェア</span>
+          </div>
+          <div class="biz-box">
+            <div class="icon">🏠</div>
+            <div class="title">仲介会社</div>
+            <div class="sub">手数料収入<br>ストック収益</div>
+          </div>
+          <div class="biz-arrow">→</div>
+          <div class="biz-box">
+            <div class="icon">👤</div>
+            <div class="title">入居者</div>
+            <div class="sub">月500円〜<br>付帯サービス享受</div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div style="background:var(--pale);border-radius:10px;padding:14px 18px;border:1.5px solid var(--border);">
+            <div style="font-size:10px;color:var(--gray);letter-spacing:2px;margin-bottom:6px;">FEATURE 01</div>
+            <div style="font-size:13px;color:var(--navy);font-weight:700;">月次サブスクリプション</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:4px;line-height:1.5;">入居期間中継続的な収益を確保</div>
+          </div>
+          <div style="background:var(--pale);border-radius:10px;padding:14px 18px;border:1.5px solid var(--border);">
+            <div style="font-size:10px;color:var(--gray);letter-spacing:2px;margin-bottom:6px;">FEATURE 02</div>
+            <div style="font-size:13px;color:var(--navy);font-weight:700;">複数収益源の統合</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:4px;line-height:1.5;">電気・コンテンツ・ネットを一本化</div>
+          </div>
+          <div style="background:var(--pale);border-radius:10px;padding:14px 18px;border:1.5px solid var(--border);">
+            <div style="font-size:10px;color:var(--gray);letter-spacing:2px;margin-bottom:6px;">FEATURE 03</div>
+            <div style="font-size:13px;color:var(--navy);font-weight:700;">スケーラブル設計</div>
+            <div style="font-size:11px;color:var(--gray);margin-top:4px;line-height:1.5;">戸数増加に応じたストック積み上げ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4: 仲介ネットワーク ── -->
+  <div class="slide" id="slide-4">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">03 / Broker Network</div>
+        <h2>仲 介 ネ ッ ト ワ ー ク</h2>
+      </div>
+      <div class="logos">SHIKIネットワークを踏襲</div>
+    </div>
+    <div class="slide-body">
+      <div class="network-wrap">
+        <div class="network-center">
+          <div class="network-hub">
+            <div class="hub-icon">🔗</div>
+            SHIKI<br>Platform
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+            <div style="background:var(--blue);color:#fff;font-size:10px;padding:4px 12px;border-radius:20px;letter-spacing:1px;">全国対応</div>
+            <div style="background:var(--accent);color:#fff;font-size:10px;padding:4px 12px;border-radius:20px;letter-spacing:1px;">即日連携可</div>
+          </div>
+          <div class="network-stats" style="width:100%;margin-top:12px;">
+            <div style="font-size:11px;color:var(--gray);letter-spacing:2px;margin-bottom:12px;text-transform:uppercase;">ネットワーク規模</div>
+            <div class="stat-grid">
+              <div class="stat-item">
+                <div class="num">●●<span class="unit">社</span></div>
+                <div class="label">提携仲介会社数</div>
+              </div>
+              <div class="stat-item">
+                <div class="num">●●<span class="unit">都道府県</span></div>
+                <div class="label">カバーエリア</div>
+              </div>
+              <div class="stat-item">
+                <div class="num">●●<span class="unit">万戸</span></div>
+                <div class="label">管理物件数</div>
+              </div>
+              <div class="stat-item">
+                <div class="num">●●<span class="unit">年</span></div>
+                <div class="label">ネットワーク構築年数</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="network-spokes">
+          <div class="spoke-item">
+            <div class="s-icon">🏪</div>
+            <div>
+              <div class="s-text">大手仲介チェーン</div>
+              <div class="s-sub">全国展開の大手不動産会社と直接提携</div>
+            </div>
+          </div>
+          <div class="spoke-item">
+            <div class="s-icon">🏘️</div>
+            <div>
+              <div class="s-text">地域密着型仲介</div>
+              <div class="s-sub">地元に根付いた中小仲介会社ネットワーク</div>
+            </div>
+          </div>
+          <div class="spoke-item">
+            <div class="s-icon">💻</div>
+            <div>
+              <div class="s-text">オンライン仲介</div>
+              <div class="s-sub">デジタル仲介プラットフォームとAPI連携</div>
+            </div>
+          </div>
+          <div class="spoke-item">
+            <div class="s-icon">🤝</div>
+            <div>
+              <div class="s-text">管理会社直接提携</div>
+              <div class="s-sub">物件管理会社を通じた一括導入スキーム</div>
+            </div>
+          </div>
+          <div style="background:var(--navy);border-radius:10px;padding:14px 16px;color:rgba(255,255,255,0.8);font-size:12px;line-height:1.7;">
+            <strong style="color:var(--light-blue);">SHIKIのネットワーク資産</strong>をそのまま活用することで、<br>日本住戸は初期コストゼロで全国展開が可能です。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 5: 商品概要 ── -->
+  <div class="slide" id="slide-5">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">04 / Product</div>
+        <h2>商 品 概 要</h2>
+      </div>
+      <div class="logos">料金プラン</div>
+    </div>
+    <div class="slide-body">
+      <div class="product-grid">
+
+        <div class="product-card">
+          <div class="p-label">月額基本プラン</div>
+          <div class="p-price">¥500</div>
+          <div class="p-unit">/ 月 · 入居者1名あたり</div>
+          <div class="p-desc">
+            入居者が毎月負担する基本利用料。<br>付帯サービスへのアクセス権が含まれます。
+            <div class="product-feature" style="margin-top:10px;">電気・コンテンツ・ネットが利用可能</div>
+            <div class="product-feature">入居期間中継続課金</div>
+            <div class="product-feature">初期費用なし</div>
+          </div>
+        </div>
+
+        <div class="product-card accent">
+          <div class="p-label">仲介手数料シェア</div>
+          <div class="p-price">●%</div>
+          <div class="p-unit">収益に対する仲介会社への還元率</div>
+          <div class="p-desc">
+            月額収益の一定割合を仲介会社へ自動還元。<br>入居者が在籍する限りストック収益が積み上がります。
+            <div class="product-feature" style="margin-top:10px;">自動精算・振込</div>
+            <div class="product-feature">リアルタイムダッシュボード管理</div>
+            <div class="product-feature">戸数に応じた段階レート</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6: 付帯サービス ── -->
+  <div class="slide" id="slide-6">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">05 / Add-on Services</div>
+        <h2>付 帯 サ ー ビ ス</h2>
+      </div>
+      <div class="logos">3つのバリュー</div>
+    </div>
+    <div class="slide-body">
+      <div class="services-grid">
+
+        <!-- 電気 -->
+        <div class="service-card">
+          <div class="service-icon-wrap icon-elec">⚡</div>
+          <h3>電　気</h3>
+          <div class="s-tag">ENERGY</div>
+          <p>入居者向けの電力供給サービス。割安な電気料金プランと、使用量の可視化・節電サポートを提供します。物件全体での一括契約により、オーナーへのコスト削減効果も実現。</p>
+          <div class="service-benefit">
+            <div class="b-label">入居者メリット</div>
+            <div class="b-value"><div class="placeholder ph-long" style="height:13px;"></div></div>
+          </div>
+        </div>
+
+        <!-- コンテンツ -->
+        <div class="service-card">
+          <div class="service-icon-wrap icon-content">🎬</div>
+          <h3>コンテンツ</h3>
+          <div class="s-tag">CONTENTS</div>
+          <p>動画・音楽・電子書籍などのデジタルコンテンツを月額サービスに含めて提供。入居の魅力向上と差別化を実現し、空室リスクの低減に貢献します。</p>
+          <div class="service-benefit">
+            <div class="b-label">提供コンテンツ</div>
+            <div class="b-value"><div class="placeholder ph-long" style="height:13px;"></div></div>
+          </div>
+        </div>
+
+        <!-- ネット -->
+        <div class="service-card">
+          <div class="service-icon-wrap icon-net">📡</div>
+          <h3>インターネット</h3>
+          <div class="s-tag">NETWORK</div>
+          <p>物件全体への高速インターネット回線を一括導入。入居者は追加契約不要で即日利用可能。回線品質の管理・保守もプラットフォームが対応します。</p>
+          <div class="service-benefit">
+            <div class="b-label">回線スペック</div>
+            <div class="b-value"><div class="placeholder ph-long" style="height:13px;"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 7: 提案 ── -->
+  <div class="slide" id="slide-7">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">06 / Proposal</div>
+        <h2>提　　　　案</h2>
+      </div>
+      <div class="logos">スキーム図</div>
+    </div>
+    <div class="slide-body">
+      <div class="proposal-wrap">
+        <div class="scheme-diagram">
+          <!-- SVG スキーム図 -->
+          <svg class="scheme-svg" viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- 背景 -->
+            <defs>
+              <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#2860A8"/>
+              </marker>
+              <marker id="arrow-rev" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto">
+                <polygon points="10 0, 0 3.5, 10 7" fill="#2860A8"/>
+              </marker>
+              <marker id="arrow-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#6A7A8A"/>
+              </marker>
+            </defs>
+
+            <!-- 物件オーナー -->
+            <rect x="20" y="80" width="140" height="140" rx="12" fill="#EEF5FC" stroke="#C8DCEA" stroke-width="1.5"/>
+            <text x="90" y="110" text-anchor="middle" font-size="24">🏢</text>
+            <text x="90" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#1A2E48">物件オーナー</text>
+            <text x="90" y="153" text-anchor="middle" font-size="10" fill="#6A7A8A">物件提供</text>
+            <text x="90" y="167" text-anchor="middle" font-size="10" fill="#6A7A8A">管理委託</text>
+
+            <!-- 矢印: オーナー → プラットフォーム -->
+            <line x1="162" y1="140" x2="210" y2="140" stroke="#2860A8" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="186" y="132" text-anchor="middle" font-size="9" fill="#6A7A8A">委託</text>
+            <!-- 矢印: プラットフォーム → オーナー -->
+            <line x1="210" y1="158" x2="162" y2="158" stroke="#2860A8" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="186" y="172" text-anchor="middle" font-size="9" fill="#2860A8">収益還元</text>
+
+            <!-- SHIKI×日本住戸 プラットフォーム (中央) -->
+            <rect x="215" y="50" width="200" height="200" rx="14" fill="#1A2E48" stroke="#2860A8" stroke-width="2"/>
+            <text x="315" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="#4A90C8" letter-spacing="1">PLATFORM</text>
+            <text x="315" y="118" text-anchor="middle" font-size="13" font-weight="700" fill="white">SHIKI</text>
+            <text x="315" y="136" text-anchor="middle" font-size="11" fill="rgba(255,255,255,0.5)">×</text>
+            <text x="315" y="155" text-anchor="middle" font-size="13" font-weight="700" fill="white">日本住戸</text>
+            <text x="315" y="178" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.5)">月次課金管理</text>
+            <text x="315" y="193" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.5)">サービス統合</text>
+            <text x="315" y="208" text-anchor="middle" font-size="10" fill="rgba(255,255,255,0.5)">収益配分</text>
+
+            <!-- 矢印: プラットフォーム → 仲介 -->
+            <line x1="417" y1="140" x2="465" y2="140" stroke="#2860A8" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="441" y="132" text-anchor="middle" font-size="9" fill="#6A7A8A">紹介</text>
+            <line x1="465" y1="158" x2="417" y2="158" stroke="#2860A8" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="441" y="172" text-anchor="middle" font-size="9" fill="#2860A8">手数料</text>
+
+            <!-- 仲介会社 -->
+            <rect x="468" y="80" width="140" height="140" rx="12" fill="#EEF5FC" stroke="#C8DCEA" stroke-width="1.5"/>
+            <text x="538" y="110" text-anchor="middle" font-size="24">🏪</text>
+            <text x="538" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#1A2E48">仲介会社</text>
+            <text x="538" y="153" text-anchor="middle" font-size="10" fill="#6A7A8A">入居者紹介</text>
+            <text x="538" y="167" text-anchor="middle" font-size="10" fill="#6A7A8A">ストック収益</text>
+
+            <!-- 矢印: 仲介 → 入居者 -->
+            <line x1="610" y1="140" x2="658" y2="140" stroke="#2860A8" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="634" y="132" text-anchor="middle" font-size="9" fill="#6A7A8A">マッチング</text>
+            <line x1="658" y1="158" x2="610" y2="158" stroke="#E8A020" stroke-width="1.5" marker-end="url(#arrow)"/>
+            <text x="634" y="172" text-anchor="middle" font-size="9" fill="#E8A020">月500円〜</text>
+
+            <!-- 入居者 -->
+            <rect x="662" y="80" width="140" height="140" rx="12" fill="#EEF5FC" stroke="#C8DCEA" stroke-width="1.5"/>
+            <text x="732" y="110" text-anchor="middle" font-size="24">👤</text>
+            <text x="732" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#1A2E48">入 居 者</text>
+            <text x="732" y="153" text-anchor="middle" font-size="10" fill="#6A7A8A">月額課金</text>
+            <text x="732" y="167" text-anchor="middle" font-size="10" fill="#6A7A8A">サービス享受</text>
+
+            <!-- 入居者 → プラットフォーム (弧) -->
+            <path d="M 732 80 Q 520 10 315 50" stroke="#E8A020" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+            <text x="530" y="22" text-anchor="middle" font-size="9" fill="#E8A020">月額料金支払い</text>
+
+            <!-- 付帯サービス下段 -->
+            <rect x="215" y="265" width="60" height="30" rx="6" fill="#FFF3E0" stroke="#F0C080" stroke-width="1"/>
+            <text x="245" y="285" text-anchor="middle" font-size="10" fill="#E8A020">⚡ 電気</text>
+            <rect x="285" y="265" width="70" height="30" rx="6" fill="#F3E5F5" stroke="#C8A0D8" stroke-width="1"/>
+            <text x="320" y="285" text-anchor="middle" font-size="10" fill="#9060B8">🎬 コンテンツ</text>
+            <rect x="365" y="265" width="50" height="30" rx="6" fill="#E3F2FD" stroke="#90C8F0" stroke-width="1"/>
+            <text x="390" y="285" text-anchor="middle" font-size="10" fill="#2080C0">📡 ネット</text>
+
+            <line x1="245" y1="250" x2="245" y2="265" stroke="#E8A020" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="315" y1="250" x2="315" y2="265" stroke="#9060B8" stroke-width="1" stroke-dasharray="3,2"/>
+            <line x1="385" y1="250" x2="385" y2="265" stroke="#2080C0" stroke-width="1" stroke-dasharray="3,2"/>
+          </svg>
+        </div>
+        <div class="proposal-note">
+          <strong>提案要旨：</strong>SHIKIが構築したプラットフォームと仲介ネットワークを活用し、日本住戸の物件・顧客基盤を組み合わせることで、入居者への付加価値提供・仲介会社への継続収益・オーナーへのコスト削減を同時に実現します。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 8: 手数料 ── -->
+  <div class="slide" id="slide-8">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">07 / Fee Structure</div>
+        <h2>手 数 料 イ メ ー ジ</h2>
+      </div>
+      <div class="logos">ストック収益モデル</div>
+    </div>
+    <div class="slide-body">
+      <div class="fee-wrap">
+
+        <div class="fee-structure">
+          <h3>手数料内訳イメージ</h3>
+          <div class="fee-row">
+            <div class="f-name">入居者月額基本料</div>
+            <div class="f-val">¥500 / 月</div>
+          </div>
+          <div class="fee-row">
+            <div class="f-name">電気サービス収益</div>
+            <div class="f-val">●% シェア</div>
+          </div>
+          <div class="fee-row">
+            <div class="f-name">コンテンツ収益</div>
+            <div class="f-val">●% シェア</div>
+          </div>
+          <div class="fee-row">
+            <div class="f-name">インターネット収益</div>
+            <div class="f-val">●% シェア</div>
+          </div>
+          <div class="fee-row" style="border-top:2px solid var(--blue);margin-top:4px;padding-top:14px;">
+            <div class="f-name" style="font-weight:700;">仲介会社への還元率</div>
+            <div class="f-val" style="font-size:22px;">●%</div>
+          </div>
+          <div style="background:var(--pale);border-radius:8px;padding:10px 14px;border:1px solid var(--border);font-size:11px;color:var(--gray);line-height:1.6;">
+            ※ 入居者が在籍する限り毎月継続して受け取れるストック型収益。戸数が増えるほど積み上がります。
+          </div>
+        </div>
+
+        <div class="stock-chart">
+          <h3>ストック収益積み上がりイメージ</h3>
+          <div class="bar-chart" id="barChart" style="height: 160px; position: relative;">
+            <!-- bars rendered by JS -->
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--gray);padding:0 4px;">
+            <span>1ヶ月目</span><span>6ヶ月目</span><span>12ヶ月目</span><span>18ヶ月目</span><span>24ヶ月目</span>
+          </div>
+          <div class="chart-note">※ 保有戸数・稼働率に応じた試算イメージ。実際の収益は条件によって異なります。</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px;">
+            <div style="background:var(--pale);border-radius:8px;padding:10px 14px;border:1.5px solid var(--border);text-align:center;">
+              <div style="font-size:10px;color:var(--gray);margin-bottom:4px;">100戸×24ヶ月 目安</div>
+              <div style="font-size:18px;font-weight:700;color:var(--blue);">●●万円<span style="font-size:11px;font-weight:400;">/月</span></div>
+            </div>
+            <div style="background:var(--pale);border-radius:8px;padding:10px 14px;border:1.5px solid var(--border);text-align:center;">
+              <div style="font-size:10px;color:var(--gray);margin-bottom:4px;">500戸×24ヶ月 目安</div>
+              <div style="font-size:18px;font-weight:700;color:var(--accent);">●●万円<span style="font-size:11px;font-weight:400;">/月</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 9: 問い合わせ先 ── -->
+  <div class="slide" id="slide-9">
+    <div class="slide-header">
+      <div>
+        <div class="page-tag">08 / Contact</div>
+        <h2>問 い 合 わ せ 先</h2>
+      </div>
+    </div>
+    <div class="slide-body" style="display:flex;align-items:center;justify-content:center;height:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:24px;width:100%;max-width:700px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;">
+
+          <!-- SHIKI -->
+          <div class="contact-card">
+            <div class="c-brand">SHIKI</div>
+            <div class="contact-detail">
+              <div class="cd-item">
+                <div class="cd-label">担当部署</div>
+                <div class="cd-val"><div class="placeholder ph-long" style="height:14px;"></div></div>
+              </div>
+              <div class="cd-item">
+                <div class="cd-label">担当者名</div>
+                <div class="cd-val"><div class="placeholder ph-short" style="height:14px;"></div></div>
+              </div>
+              <div class="cd-item">
+                <div class="cd-label">電話番号</div>
+                <div class="cd-val"><div class="placeholder ph-long" style="height:14px;"></div></div>
+              </div>
+              <div class="cd-item">
+                <div class="cd-label">メール</div>
+                <div class="cd-val"><div class="placeholder ph-long" style="height:14px;"></div></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--gray);">受付時間: 平日 ●:00〜●:00</div>
+          </div>
+
+          <!-- 日本住戸 -->
+          <div class="contact-card">
+            <div class="c-brand" style="color:var(--navy);">日本住戸</div>
+            <div class="contact-detail">
+              <div class="cd-item">
+                <div class="cd-label">担当部署</div>
+                <div class="cd-val"><div class="placeholder ph-long" style="height:14px;"></div></div>
+              </div>
+              <div class="cd-item">
+                <div class="cd-label">担当者名</div>
+                <div class="cd-val"><div class="placeholder ph-short" style="height:14px;"></div></div>
+              </div>
+              <div class="cd-item">
+                <div class="cd-label">電話番号</div>
+                <div class="cd-val"><div class="placeholder ph-long" style="height:14px;"></div></div>
+              </div>
+              <div class="cd-item">
+                <div class="cd-label">メール</div>
+                <div class="cd-val"><div class="placeholder ph-long" style="height:14px;"></div></div>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--gray);">受付時間: 平日 ●:00〜●:00</div>
+          </div>
+
+        </div>
+        <div style="background:var(--navy);border-radius:12px;padding:14px 32px;color:rgba(255,255,255,0.7);font-size:12px;letter-spacing:2px;text-align:center;width:100%;">
+          お気軽にお問い合わせください &nbsp;|&nbsp; <span style="color:var(--light-blue);">SHIKI × 日本住戸</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Navigation ── -->
+<div class="nav">
+  <button class="nav-btn" id="prevBtn" onclick="navigate(-1)" disabled>‹</button>
+  <div class="page-dots" id="pageDots"></div>
+  <button class="nav-btn" id="nextBtn" onclick="navigate(1)">›</button>
+  <div class="page-counter" id="pageCounter">1 / 9</div>
+</div>
+
+<script>
+  const TOTAL = 9;
+  let current = 1;
+
+  const dotsEl = document.getElementById('pageDots');
+  for (let i = 1; i <= TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 1 ? ' active' : '');
+    d.onclick = () => goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    dotsEl.children[current - 1].classList.remove('active');
+    current = n;
+    document.getElementById('slide-' + current).classList.add('active');
+    dotsEl.children[current - 1].classList.add('active');
+    document.getElementById('prevBtn').disabled = current === 1;
+    document.getElementById('nextBtn').disabled = current === TOTAL;
+    document.getElementById('pageCounter').textContent = current + ' / ' + TOTAL;
+  }
+
+  function navigate(dir) { goTo(Math.min(TOTAL, Math.max(1, current + dir))); }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+
+  // Bar chart
+  const chartData = [1, 2, 3.2, 4.5, 6.2, 8, 9.8, 11.5, 13.5, 15.2, 17, 19];
+  const months = [1, 2, 3, 4, 5, 6, 9, 12, 15, 18, 21, 24];
+  const max = Math.max(...chartData);
+  const chartEl = document.getElementById('barChart');
+  const chartH = 160;
+
+  chartData.forEach((v, i) => {
+    const col = document.createElement('div');
+    col.className = 'bar-col';
+    const fillH = Math.round((v / max) * (chartH - 40));
+    col.innerHTML = `
+      <div class="bar-val" style="font-size:9px;">×${v}</div>
+      <div class="bar-fill" style="height:${fillH}px;"></div>
+    `;
+    chartEl.appendChild(col);
+  });
+</script>
+</body>
+</html>
