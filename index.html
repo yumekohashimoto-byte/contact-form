@@ -76,6 +76,13 @@
       margin-bottom: 22px;
     }
 
+    .field-note {
+      color: #7A9ABE;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+
     label {
       display: block;
       color: #4A6A90;
@@ -289,7 +296,7 @@
   <div class="container">
     <div class="header">
       <div class="badge">Contact Us</div>
-      <h1>管理プランのお問い合わせ</h1>
+      <h1>500円プランの問い合わせ</h1>
       <p>管理プランの詳細・ご相談はお気軽にどうぞ。</p>
     </div>
 
@@ -321,9 +328,9 @@
                 <option value="" disabled selected>選択してください</option>
                 <option value="マンション">マンション</option>
                 <option value="アパート">アパート</option>
-                <option value="戸建て">戸建て</option>
                 <option value="その他">その他</option>
               </select>
+              <p class="field-note">※戸建ては対象外です。</p>
             </div>
             <div class="form-group">
               <label>物件の戸数<span class="required">*</span></label>
@@ -337,23 +344,79 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label>お問い合わせ種別<span class="required">*</span></label>
-            <select name="category" required>
-              <option value="" disabled selected>選択してください</option>
-              <option value="管理プランについて">管理プランについて</option>
-              <option value="現在の管理会社からの乗り換え">現在の管理会社からの乗り換え</option>
-              <option value="料金・費用について">料金・費用について</option>
-              <option value="空室対策について">空室対策について</option>
-              <option value="その他">その他</option>
-            </select>
+          <div class="form-row">
+            <div class="form-group">
+              <label>物件所在地（都道府県）<span class="required">*</span></label>
+              <select name="prefecture" id="prefectureSelect" required>
+                <option value="" disabled selected>選択してください</option>
+                <option value="北海道">北海道</option>
+                <option value="青森県">青森県</option>
+                <option value="岩手県">岩手県</option>
+                <option value="宮城県">宮城県</option>
+                <option value="秋田県">秋田県</option>
+                <option value="山形県">山形県</option>
+                <option value="福島県">福島県</option>
+                <option value="茨城県">茨城県</option>
+                <option value="栃木県">栃木県</option>
+                <option value="群馬県">群馬県</option>
+                <option value="埼玉県">埼玉県</option>
+                <option value="千葉県">千葉県</option>
+                <option value="東京都">東京都</option>
+                <option value="神奈川県">神奈川県</option>
+                <option value="新潟県">新潟県</option>
+                <option value="富山県">富山県</option>
+                <option value="石川県">石川県</option>
+                <option value="福井県">福井県</option>
+                <option value="山梨県">山梨県</option>
+                <option value="長野県">長野県</option>
+                <option value="岐阜県">岐阜県</option>
+                <option value="静岡県">静岡県</option>
+                <option value="愛知県">愛知県</option>
+                <option value="三重県">三重県</option>
+                <option value="滋賀県">滋賀県</option>
+                <option value="京都府">京都府</option>
+                <option value="大阪府">大阪府</option>
+                <option value="兵庫県">兵庫県</option>
+                <option value="奈良県">奈良県</option>
+                <option value="和歌山県">和歌山県</option>
+                <option value="鳥取県">鳥取県</option>
+                <option value="島根県">島根県</option>
+                <option value="岡山県">岡山県</option>
+                <option value="広島県">広島県</option>
+                <option value="山口県">山口県</option>
+                <option value="徳島県">徳島県</option>
+                <option value="香川県">香川県</option>
+                <option value="愛媛県">愛媛県</option>
+                <option value="高知県">高知県</option>
+                <option value="福岡県">福岡県</option>
+                <option value="佐賀県">佐賀県</option>
+                <option value="長崎県">長崎県</option>
+                <option value="熊本県">熊本県</option>
+                <option value="大分県">大分県</option>
+                <option value="宮崎県">宮崎県</option>
+                <option value="鹿児島県">鹿児島県</option>
+                <option value="沖縄県">沖縄県</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>物件所在地（市区町村）<span class="required">*</span></label>
+              <select name="city" id="citySelect" required disabled>
+                <option value="" disabled selected>都道府県を選択してください</option>
+              </select>
+            </div>
           </div>
 
-          <div class="divider"></div>
-
           <div class="form-group">
-            <label>ご相談内容</label>
-            <textarea name="message" placeholder="ご質問・ご相談内容をご自由にご記入ください"></textarea>
+            <label>何を見てお問い合わせしましたか<span class="required">*</span></label>
+            <select name="inquiry_source" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Instagram">Instagram</option>
+              <option value="ホームページ">ホームページ</option>
+              <option value="知人・紹介">知人・紹介</option>
+              <option value="検索">検索</option>
+              <option value="その他">その他</option>
+            </select>
           </div>
 
           <label class="privacy-check">
@@ -384,6 +447,52 @@
 
   <script>
     const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz7l26KuhaYFoeDt8huKaFHcEOKIO5s-Ae2zVP9R5EenCPWUAygU9HR3-Nb8JNO8eL7/exec";
+    const ADDRESS_API_URL = "https://geolonia.github.io/japanese-addresses/api/ja.json";
+    let municipalityOptions = {};
+
+    const prefectureSelect = document.getElementById('prefectureSelect');
+    const citySelect = document.getElementById('citySelect');
+
+    function resetCitySelect(message) {
+      citySelect.innerHTML = `<option value="" disabled selected>${message}</option>`;
+      citySelect.disabled = true;
+    }
+
+    function updateCityOptions() {
+      const prefecture = prefectureSelect.value;
+      const municipalities = municipalityOptions[prefecture] || [];
+
+      if (!prefecture) {
+        resetCitySelect('都道府県を選択してください');
+        return;
+      }
+
+      if (!municipalities.length) {
+        resetCitySelect('市区町村を読み込み中です');
+        return;
+      }
+
+      citySelect.innerHTML = '<option value="" disabled selected>選択してください</option>';
+      municipalities.forEach(municipality => {
+        const option = document.createElement('option');
+        option.value = municipality;
+        option.textContent = municipality;
+        citySelect.appendChild(option);
+      });
+      citySelect.disabled = false;
+    }
+
+    prefectureSelect.addEventListener('change', updateCityOptions);
+
+    fetch(ADDRESS_API_URL)
+      .then(response => response.json())
+      .then(data => {
+        municipalityOptions = data;
+        updateCityOptions();
+      })
+      .catch(() => {
+        citySelect.innerHTML = '<option value="" disabled selected>市区町村を読み込めませんでした</option>';
+      });
 
     async function handleSubmit(e) {
       e.preventDefault();
@@ -401,10 +510,17 @@
         email:         form.email.value,
         property_type: form.property_type.value,
         units:         form.units.value,
-        category:      form.category.value,
-        message:       form.message.value,
+        prefecture:    form.prefecture.value,
+        city:          form.city.value,
+        inquiry_source: form.inquiry_source.value,
         date:          new Date().toLocaleString('ja-JP')
       };
+
+      if (APPS_SCRIPT_URL === "YOUR_APPS_SCRIPT_URL_HERE") {
+        await new Promise(r => setTimeout(r, 800));
+        showSuccess();
+        return;
+      }
 
       try {
         await fetch(APPS_SCRIPT_URL, {
