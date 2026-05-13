@@ -5,7 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>プライバシーポリシー | 株式会社ルムカン</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       min-height: 100vh;
@@ -15,9 +19,16 @@
       color: #1A2E48;
     }
 
-    .container { width: 100%; max-width: 720px; margin: 0 auto; }
+    .container {
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+    }
 
-    .header { text-align: center; margin-bottom: 48px; }
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
 
     .header .badge {
       display: inline-block;
@@ -40,7 +51,10 @@
       margin-bottom: 12px;
     }
 
-    .header p { color: #888; font-size: 13px; }
+    .header p {
+      color: #888;
+      font-size: 13px;
+    }
 
     .card {
       background: #ffffff;
@@ -59,7 +73,9 @@
       border-bottom: 1px solid #D8E8F4;
     }
 
-    .section { margin-bottom: 36px; }
+    .section {
+      margin-bottom: 36px;
+    }
 
     .section h2 {
       font-size: 15px;
@@ -71,14 +87,20 @@
       letter-spacing: 1px;
     }
 
-    .section p, .section li {
+    .section p,
+    .section li {
       font-size: 14px;
       line-height: 1.9;
       color: #555;
     }
 
-    .section ul { padding-left: 20px; }
-    .section ul li { margin-bottom: 6px; }
+    .section ul {
+      padding-left: 20px;
+    }
+
+    .section ul li {
+      margin-bottom: 6px;
+    }
 
     .divider {
       height: 1px;
@@ -102,7 +124,10 @@
       margin-bottom: 16px;
     }
 
-    .company-info table { width: 100%; border-collapse: collapse; }
+    .company-info table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
     .company-info td {
       font-size: 14px;
@@ -112,10 +137,23 @@
       vertical-align: top;
     }
 
-    .company-info td:first-child { width: 120px; color: #888; font-size: 13px; }
-    .company-info a { color: #2860A8; text-decoration: none; }
+    .company-info td:first-child {
+      width: 120px;
+      color: #888;
+      font-size: 13px;
+    }
 
-    .date { text-align: right; font-size: 13px; color: #aaa; margin-top: 40px; }
+    .company-info a {
+      color: #2860A8;
+      text-decoration: none;
+    }
+
+    .date {
+      text-align: right;
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 40px;
+    }
 
     .back-btn {
       display: inline-flex;
@@ -128,7 +166,9 @@
       transition: opacity 0.2s;
     }
 
-    .back-btn:hover { opacity: 0.7; }
+    .back-btn:hover {
+      opacity: 0.7;
+    }
 
     @media (max-width: 600px) {
       .card { padding: 36px 24px; }
@@ -145,7 +185,7 @@
       <p>個人情報の取り扱いについて</p>
     </div>
 
-    <a href="./" class="back-btn">
+    <a href="./" class="back-btn" onclick="return goBackToForm(event)">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M10 12L6 8l4-4" stroke="#2860A8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -250,6 +290,14 @@
       <p class="date">制定日：2026年5月2日</p>
     </div>
   </div>
+
+  <script>
+    function goBackToForm(event) {
+      event.preventDefault();
+      window.location.href = window.location.protocol === 'file:' ? 'contact-form.html' : './';
+      return false;
+    }
+  </script>
 
 </body>
 </html>
